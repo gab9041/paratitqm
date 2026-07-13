@@ -17,8 +17,26 @@
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
-            background: linear-gradient(to bottom, #7fc1e3 0%, #bcead5 60%, #9ede73 100%);
+            /* Imagen de fondo 'back' con alternativas de extensión común */
+            background-image: url('back.jpg'), url('back.jpeg'), url('back.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             position: relative;
+        }
+
+        /* --- EFECTO SOMBREADO ROJO CEREZA AL FINAL --- */
+        body::after {
+            content: "";
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35vh; /* Altura del sombreado */
+            background: linear-gradient(to top, rgba(145, 0, 30, 0.7) 0%, rgba(145, 0, 30, 0) 100%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* --- PANTALLA DE INICIO (OVERLAY) --- */
@@ -95,131 +113,30 @@
             font-weight: 400;
         }
 
-        /* --- FONDO ANIMADO --- */
-        .landscape-bg {
+        /* --- SISTEMA DE CORAZONES (EMOJIS) --- */
+        .heart-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -2; /* Detrás de las cartas */
             pointer-events: none;
         }
 
-        .cloud {
+        .emoji-heart {
             position: absolute;
-            background: #ffffff;
-            border-radius: 100px;
-            opacity: 0.85;
-            animation: moveClouds 25s linear infinite;
-        }
-        .cloud::before, .cloud::after {
-            content: '';
-            position: absolute;
-            background: #ffffff;
-            border-radius: 50%;
-        }
-        .cloud-1 { width: 120px; height: 40px; top: 15%; left: -150px; animation-duration: 35s; }
-        .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
-        .cloud-1::after { width: 70px; height: 70px; top: -45px; left: 40px; }
-
-        .cloud-2 { width: 180px; height: 50px; top: 25%; left: -200px; animation-duration: 45s; animation-delay: 5s; }
-        .cloud-2::before { width: 70px; height: 70px; top: -35px; left: 25px; }
-        .cloud-2::after { width: 90px; height: 90px; top: -55px; left: 65px; }
-
-        @keyframes moveClouds {
-            0% { left: -200px; }
-            100% { left: 105vw; }
+            bottom: -50px;
+            user-select: none;
+            animation: floatUpEmoji 10s linear infinite;
+            opacity: 0;
         }
 
-        .hill {
-            position: absolute;
-            bottom: 0;
-            width: 150%;
-            border-radius: 50% 50% 0 0;
-        }
-        .hill-back { height: 45vh; left: -20%; background: #7bc676; opacity: 0.7; }
-        .hill-front { height: 35vh; left: -10%; background: #5dbb63; }
-
-        .grass-blade {
-            position: absolute;
-            bottom: 0;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 60px solid #4caf50;
-            transform-origin: bottom center;
-            animation: swayGrass 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes swayGrass {
-            0% { transform: rotate(-5deg); }
-            100% { transform: rotate(8deg); }
-        }
-
-        .tree {
-            position: absolute;
-            bottom: 12vh;
-            width: 120px;
-            height: 200px;
-            transform-origin: bottom center;
-            animation: sway 4s ease-in-out infinite alternate;
-        }
-        .tree-left { left: 4%; animation-delay: 0s; }
-        .tree-right { right: 4%; animation-delay: 0.5s; }
-
-        .trunk {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 90px;
-            background: #8B5A2B;
-            border-radius: 4px;
-        }
-        .leaves {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110px;
-            height: 130px;
-            background: #4eed56;
-            border-radius: 50%;
-            box-shadow: inset -10px -10px 0px #3cb843, 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        @keyframes sway {
-            0% { transform: rotate(-3deg); }
-            100% { transform: rotate(4deg); }
-        }
-
-        .dandelion-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 50%;
-            box-shadow: 0 0 8px #fff;
-            animation: floatUp 9s linear infinite;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(105vh) translateX(0) scale(0.5); opacity: 0; }
-            15% { opacity: 1; }
-            85% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) translateX(150px) scale(1.2); opacity: 0; }
+        @keyframes floatUpEmoji {
+            0% { transform: translateY(0) scale(0.7) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-115vh) scale(1.3) rotate(20deg); opacity: 0; }
         }
 
         /* --- CONTENIDO PRINCIPAL --- */
@@ -233,8 +150,9 @@
         .main-title {
             font-family: 'Caveat', cursive;
             font-size: 4.5rem;
-            color: #000000;
-            filter: drop-shadow(0 0 15px #00d2ff);
+            color: #ffffff;
+            /* GLOW ROSA PASTEL */
+            text-shadow: 0 0 10px #ffb3c1, 0 0 20px #ffb3c1, 0 0 30px #ffc6ff;
             margin-bottom: 60px;
             font-weight: 700;
         }
@@ -254,7 +172,7 @@
             position: relative;
             cursor: pointer;
             border-radius: 4px;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -266,10 +184,9 @@
 
         .envelope:hover {
             transform: translateY(-10px);
-            box-shadow: 0 18px 30px rgba(0,0,0,0.25);
+            box-shadow: 0 18px 30px rgba(0,0,0,0.45);
         }
 
-        /* Solapa triangular */
         .envelope::before {
             content: "";
             position: absolute;
@@ -309,7 +226,6 @@
             font-weight: 600;
         }
 
-        /* Corazón central */
         .heart {
             background-color: #e63946;
             display: inline-block;
@@ -333,7 +249,6 @@
         .heart:before { top: -13px; left: 0; }
         .heart:after { left: 13px; top: 0; }
 
-        /* Estilo para las esquinas usando emojis */
         .emoji-sticker {
             position: absolute;
             font-size: 2.2rem;
@@ -394,7 +309,6 @@
             z-index: 2010;
         }
 
-        /* Contenedor con scroll que aloja las imágenes */
         .letter-container-box {
             width: 100%;
             overflow-y: auto;
@@ -423,18 +337,8 @@
         </div>
     </div>
 
-    <!-- Fondo del Paisaje -->
-    <div class="landscape-bg">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="hill hill-back"></div>
-        <div class="hill hill-front"></div>
-        <div id="grass-layer"></div>
-        <div class="tree tree-left"><div class="trunk"></div><div class="leaves"></div></div>
-        <div class="tree tree-right"><div class="trunk"></div><div class="leaves"></div></div>
-    </div>
-
-    <div class="dandelion-container" id="dandelions"></div>
+    <!-- Contenedor Dinámico para los Emojis de Corazón -->
+    <div class="heart-container" id="emoji-hearts-layer"></div>
 
     <!-- Contenido Principal -->
     <div class="main-content">
@@ -488,18 +392,16 @@
         </div>
     </div>
 
-    <!-- Modal para visualización de las cartas completas -->
+    <!-- Modal para las cartas -->
     <div class="modal" id="letter-modal" onclick="closeLetter(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="document.getElementById('letter-modal').classList.remove('active')">×</span>
-            <div class="letter-container-box" id="letter-wrapper">
-                <!-- Las imágenes se insertan dinámicamente aquí -->
-            </div>
+            <div class="letter-container-box" id="letter-wrapper"></div>
         </div>
     </div>
 
     <script>
-        // Animaciones de fondo
+        // Corazones de la pantalla de bienvenida
         const overlay = document.getElementById('welcome-overlay');
         for (let i = 0; i < 15; i++) {
             const heart = document.createElement('div');
@@ -510,38 +412,38 @@
             overlay.appendChild(heart);
         }
 
-        const grassLayer = document.getElementById('grass-layer');
-        for(let i=0; i<80; i++) {
-            const blade = document.createElement('div');
-            blade.classList.add('grass-blade');
-            blade.style.left = (Math.random() * 100) + 'vw';
-            blade.style.bottom = (Math.random() * 15) + 'px';
-            blade.style.animationDelay = (Math.random() * 2) + 's';
-            blade.style.borderBottomColor = i % 2 === 0 ? '#4caf50' : '#388e3c';
-            grassLayer.appendChild(blade);
-        }
-
         function startApp() {
             overlay.style.opacity = '0';
             setTimeout(() => overlay.style.display = 'none', 800);
-            createDandelions();
+            createEmojiHearts();
         }
 
-        function createDandelions() {
-            const container = document.getElementById('dandelions');
+        // --- SISTEMA DE CORAZONES DETRÁS DE LAS CARTAS ---
+        function createEmojiHearts() {
+            const container = document.getElementById('emoji-hearts-layer');
+            // Array con emojis en Rojo, Rosa y Rojo Intenso/Brillante
+            const heartTypes = ['❤️', '💗', '💖'];
+            
             for (let i = 0; i < 25; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
-                container.appendChild(particle);
+                const heart = document.createElement('div');
+                heart.classList.add('emoji-heart');
+                
+                // Selección aleatoria del emoji/color
+                heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+                
+                // Configuración de posiciones y tamaños randomizados
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem'; 
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (Math.random() * 5 + 7) + 's';
+                
+                container.appendChild(heart);
             }
         }
 
-        // --- MAPEO DE IMÁGENES LOCALES SIMPLIFICADO ---
+        // Mapeo de imágenes
         const lettersImages = {
-            1: ["cumple_parte1.jpeg", "cumple_parte2.jpeg"], // Lista de 2 partes para Cumpleaños
+            1: ["cumple_parte1.jpeg", "cumple_parte2.jpeg"],
             2: ["mal_dia.jpeg"],
             3: ["dudes_de_ti.jpeg"],
             4: ["sonreir.jpeg"],
@@ -550,25 +452,18 @@
 
         function openLetter(id, colorExacto) {
             const wrapper = document.getElementById('letter-wrapper');
-            // Limpiamos cualquier contenido previo
             wrapper.innerHTML = "";
             
-            // Obtenemos el array de imágenes para este sobre
             const imgs = lettersImages[id];
-            
-            // Creamos dinámicamente cada imagen
             imgs.forEach(src => {
                 const imgElement = document.createElement('img');
                 imgElement.src = src;
                 imgElement.classList.add('letter-full-image');
-                imgElement.alt = "Contenido de la carta";
+                imgElement.alt = "Carta";
                 wrapper.appendChild(imgElement);
             });
             
-            // Aplicamos el borde del color exacto del sobre
             wrapper.style.border = `8px solid ${colorExacto}`;
-            
-            // Mostramos el modal
             document.getElementById('letter-modal').classList.add('active');
         }
 
